@@ -1,8 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 
-teslo-shop-assets.zip
+.env
 
+/postgres/
 # dependencies
 /node_modules
 /.pnp
