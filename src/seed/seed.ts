@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+import { countries } from './seed-countries';
 
 interface SeedProduct {
   description: string;
@@ -19,6 +20,11 @@ interface SeedUser {
   name: string;
   role: "admin" | "user";
 
+}
+
+interface SeedCountry {
+  id: string;
+  country: string;
 }
 
 type ValidSizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';

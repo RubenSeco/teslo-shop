@@ -4,6 +4,9 @@ export default function ShopLayout({ children }: { children: React.ReactNode; })
 
 
   return (
+
+
+
     <main className="min-h-screen">
 
       <div className="relative h-14 z-20">

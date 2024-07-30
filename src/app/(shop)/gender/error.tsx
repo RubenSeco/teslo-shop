@@ -1,12 +1,7 @@
-"use client";
+'use client';
 
-
-import NotFound from "./error";
-
+import NotFound from './error';
 
 export default function () {
-  return (
-    <NotFound />
-  );
+  return <NotFound />;
 }
-

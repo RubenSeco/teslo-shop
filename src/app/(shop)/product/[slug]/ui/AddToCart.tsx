@@ -1,19 +1,16 @@
-"use client";
+'use client';
 
-import { QuantitySelector, SizeSelector } from "@/components";
-import type { CartProduct, Product } from "@/interfaces";
-import { useState } from "react";
+import { QuantitySelector, SizeSelector } from '@/components';
+import type { CartProduct, Product } from '@/interfaces';
+import { useState } from 'react';
 import { Size } from '../../../../../interfaces/product.interface';
-import { useCartStore } from "@/store";
-
+import { useCartStore } from '@/store';
 
 interface Props {
   product: Product;
-
 }
 
 export const AddToCart = ({ product }: Props) => {
-
   const addProductToCart = useCartStore((state) => state.addProductToCart);
 
   const [size, setSize] = useState<Size | undefined>();
@@ -34,7 +31,7 @@ export const AddToCart = ({ product }: Props) => {
       price: product.price,
       quantity: quantity,
       size: size,
-      image: product.images[0],
+      image: product.images[0]
     };
 
     addProductToCart(cartProduct);
@@ -43,15 +40,9 @@ export const AddToCart = ({ product }: Props) => {
     setSize(undefined);
   };
 
-
   return (
     <>
-
-      {
-        (posted && !size) && (
-          <span className="mt-2 text-red-500">Debe seleccionar una talla*  </span>
-        )
-      }
+      {posted && !size && <span className='mt-2 text-red-500'>Debe seleccionar una talla* </span>}
 
       {/* Selector de talles */}
       <SizeSelector
@@ -61,10 +52,18 @@ export const AddToCart = ({ product }: Props) => {
       />
 
       {/* Selector de cantidad */}
-      <QuantitySelector quantity={quantity} onQuantityChanged={setQuantity} stock={product.inStock} />
+      <QuantitySelector
+        quantity={quantity}
+        onQuantityChanged={setQuantity}
+        stock={product.inStock}
+      />
 
       {/* Button */}
-      <button onClick={addToCart} className="btn-primary my-5">Agregar al carrito</button>
+      <button
+        onClick={addToCart}
+        className='btn-primary my-5'>
+        Agregar al carrito
+      </button>
     </>
   );
 };
