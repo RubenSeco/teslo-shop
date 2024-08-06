@@ -2,11 +2,12 @@
 
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
-import { Country } from '@/interfaces';
+import { Address, Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
 import { useEffect } from 'react';
-import { setUserAddress } from '@/actions';
+import { deleteAddress, setUserAddress } from '@/actions';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type FormInput = {
   firstName: string;
@@ -17,14 +18,17 @@ type FormInput = {
   city: string;
   country: string;
   phone: string;
-  rememberAddress: boolean;
+  countryId: string;
+  rememberAddress?: boolean;
 };
 
 interface Props {
   countries: Country[];
+  userStoreAddress?: Partial<Address> | undefined;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userStoreAddress }: Props) => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -32,7 +36,8 @@ export const AddressForm = ({ countries }: Props) => {
     reset
   } = useForm<FormInput>({
     defaultValues: {
-      // TODO: Leer de la base de datos
+      ...userStoreAddress,
+      rememberAddress: false
     }
   });
 
@@ -50,15 +55,19 @@ export const AddressForm = ({ countries }: Props) => {
   }, []);
 
   const onSubmit = (data: FormInput) => {
-    setAddress(data);
-    const { rememberAddress, ...restAddress } = data;
+    const { rememberAddress, countryId: id, ...restAddress } = data;
+
+    const length = restAddress.country.length;
+    const countryId = restAddress.country.slice(length - 2, length);
+
+    setAddress({ ...restAddress, countryId });
 
     if (rememberAddress) {
-      // TODO: Server Action
-      setUserAddress(restAddress as any, session!.user.id);
+      setUserAddress(restAddress, session!.user.id);
     } else {
-      // TODO: Server Action
+      deleteAddress(session!.user.id);
     }
+    router.push('/checkout');
   };
 
   return (
@@ -127,7 +136,9 @@ export const AddressForm = ({ countries }: Props) => {
             {...register('country', { required: true })}>
             <option>[ Seleccione ]</option>
             {countries.map((country) => (
-              <option key={country.id}>{country.name}</option>
+              <option key={country.id}>
+                {country.name} - {country.id}
+              </option>
             ))}
           </select>
         </div>

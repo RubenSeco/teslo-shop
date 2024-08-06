@@ -28,34 +28,41 @@ export const setUserAddress = async (address: Address, userId: string) => {
 };
 
 const createOrReplaceAddress = async (address: Address, userId: string) => {
+
   try {
+
     const storeAddress = await prisma.userAddress.findUnique({
+
       where: { userId: userId },
+    });
+
+    const country = await prisma.country.findFirst({
+      where: { name: address.country },
     });
 
     const addressToSave = {
       address: address.address,
       address2: address.address2,
-      country: address.country,
       firstName: address.firstName,
       lastName: address.lastName,
       phone: address.phone,
       postalCode: address.postalCode,
       city: address.city,
-
+      countryId: country!.id,
       userId: userId,
+
     };
 
     if (!storeAddress) {
       const newAddress = await prisma.userAddress.create({
         data: addressToSave,
-
       });
       return newAddress;
     }
+
     const updatedAddress = await prisma.userAddress.update({
       where: { userId: userId },
-      data: addressToSave,
+      data: addressToSave
     });
 
     return updatedAddress;
@@ -65,3 +72,4 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
     throw new Error("No se pudo grabar la dirección");
   }
 };
+
