@@ -1,20 +1,25 @@
 
 
-export { authenticate } from "./auth/login";
-export { deleteAddress } from "./address/delete-address";
-export { getCountries } from "./country/get-countries";
-export { getOrderById } from "./order/get-order-by-id";
-export { getOrderByUser } from "./order/get-order-by-user";
-export { getPaginatedProductsWithImages } from "./products/product-pagination";
-export { getProductBySlug } from "./products/get-product-by-slug";
-export { getStockBySlug } from "./products/get-stock-by-slug";
-export { getUserAddress } from "./address/get-user-address";
-export { logout } from "./auth/logout";
-export { placeOrder } from "./order/place-order";
-export { registerUser } from "./auth/register";
-export { setUserAddress } from "./address/set-user-address";
+export * from "./address/delete-address";
+export * from "./address/get-user-address";
+export * from "./address/set-user-address";
 
+export * from "./auth/login";
+export * from "./auth/logout";
+export * from "./auth/register";
 
+export * from "./country/get-countries";
+
+export * from "./order/get-order-by-id";
+export * from "./order/get-order-by-user";
+export * from "./order/place-order";
+
+export * from "./payment/paypal-check-payment";
+export * from "./payment/set-transaction-id";
+
+export * from "./products/get-product-by-slug";
+export * from "./products/get-stock-by-slug";
+export * from "./products/product-pagination";
 
 
 

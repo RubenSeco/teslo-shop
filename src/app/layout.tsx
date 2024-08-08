@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { inter } from '@/config/fonts';
 import './globals.css';
-import { Provider } from '@/components/provider/Provider';
+import { Providers } from '@/components';
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
 
       <body className={inter.className}>
-        <Provider>{children}</Provider>
+        <Providers>{children}</Providers>
       </body>
       {/* inter.classname: Configuración del font family por default para toda la aplicación */}
     </html>
