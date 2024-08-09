@@ -1,4 +1,8 @@
 'use client';
+import { useSession } from 'next-auth/react';
+import { useUIStore } from '@/store';
+import { logout } from '@/actions';
+import clsx from 'clsx';
 
 import {
   IoCloseOutline,
@@ -11,11 +15,6 @@ import {
   IoTicketOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
-
-import { useUIStore } from '@/store';
-import clsx from 'clsx';
-import { logout } from '@/actions';
-import { useSession } from 'next-auth/react';
 
 export const SideBar = () => {
   const onLogout = () => {
@@ -126,7 +125,8 @@ export const SideBar = () => {
               <span className='ml-3 text-xl'>Productos</span>
             </Link>
             <Link
-              href='/'
+              href='/admin/orders'
+              onClick={() => closeMenu()}
               className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'>
               <IoTicketOutline size={30} />
               <span className='ml-3 text-xl'>Ordenes</span>

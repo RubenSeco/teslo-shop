@@ -18,13 +18,12 @@ type FormInput = {
   city: string;
   country: string;
   phone: string;
-  countryId: string;
   rememberAddress?: boolean;
 };
 
 interface Props {
   countries: Country[];
-  userStoreAddress?: Partial<Address> | undefined;
+  userStoreAddress?: Partial<Address>;
 }
 
 export const AddressForm = ({ countries, userStoreAddress }: Props) => {
@@ -55,12 +54,9 @@ export const AddressForm = ({ countries, userStoreAddress }: Props) => {
   }, []);
 
   const onSubmit = (data: FormInput) => {
-    const { rememberAddress, countryId: id, ...restAddress } = data;
+    const { rememberAddress, ...restAddress } = data;
 
-    const length = restAddress.country.length;
-    const countryId = restAddress.country.slice(length - 2, length);
-
-    setAddress({ ...restAddress, countryId });
+    setAddress(restAddress);
 
     if (rememberAddress) {
       setUserAddress(restAddress, session!.user.id);
@@ -136,9 +132,7 @@ export const AddressForm = ({ countries, userStoreAddress }: Props) => {
             {...register('country', { required: true })}>
             <option>[ Seleccione ]</option>
             {countries.map((country) => (
-              <option key={country.id}>
-                {country.name} - {country.id}
-              </option>
+              <option key={country.id}>{country.name}</option>
             ))}
           </select>
         </div>

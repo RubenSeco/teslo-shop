@@ -7,6 +7,7 @@ import { Address } from "@/interfaces";
 
 
 export const setUserAddress = async (address: Address, userId: string) => {
+
   try {
 
     const newAddress = await createOrReplaceAddress(address, userId);
@@ -29,6 +30,7 @@ export const setUserAddress = async (address: Address, userId: string) => {
 
 const createOrReplaceAddress = async (address: Address, userId: string) => {
 
+
   try {
 
     const storeAddress = await prisma.userAddress.findUnique({
@@ -37,7 +39,7 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
     });
 
     const country = await prisma.country.findFirst({
-      where: { name: address.country },
+      where: { name: address.country }
     });
 
     const addressToSave = {
@@ -48,9 +50,8 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
       phone: address.phone,
       postalCode: address.postalCode,
       city: address.city,
-      countryId: country!.id,
+      countryId: country?.id,
       userId: userId,
-
     };
 
     if (!storeAddress) {
@@ -62,7 +63,7 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
 
     const updatedAddress = await prisma.userAddress.update({
       where: { userId: userId },
-      data: addressToSave
+      data: addressToSave,
     });
 
     return updatedAddress;
