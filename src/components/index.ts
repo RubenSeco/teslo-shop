@@ -1,3 +1,4 @@
+export { ProductImage } from "./product/product-image/ProductImage";
 
 
 
@@ -19,5 +20,4 @@ export * from "./ui/pagination/Pagination";
 export * from "./ui/sidebar/SideBar";
 export * from "./ui/title/Title";
 export * from "./ui/top-menu/TopMenu";
-
 

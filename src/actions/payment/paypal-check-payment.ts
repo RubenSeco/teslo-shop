@@ -33,10 +33,8 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
     };
   }
 
-  // TODO:  Realizar la actualización en nuestra base de datos
 
   try {
-    console.log({ status, purchase_units });
     await prisma.order.update({
       where: { id: orderId },
       data: {
@@ -45,7 +43,6 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
       }
     });
 
-    // TODO: Revalidar un path
 
     revalidatePath(`/orders/${orderId}`);
     return {

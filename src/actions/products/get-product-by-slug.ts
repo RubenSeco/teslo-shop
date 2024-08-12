@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { truncate } from "fs/promises";
 
 export const getProductBySlug = async (slug: string) => {
 
@@ -9,11 +10,7 @@ export const getProductBySlug = async (slug: string) => {
 
     const product = await prisma.product.findFirst({
       include: {
-        ProductImage: {
-          select: {
-            url: true,
-          }
-        }
+        ProductImage: true,
       },
       where: {
         slug: slug
